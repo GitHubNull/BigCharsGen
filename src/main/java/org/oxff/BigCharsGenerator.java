@@ -64,19 +64,13 @@ public class BigCharsGenerator {
 
         // 根据单位计算结果
         String unitPart = characterCountKey.replaceAll("\\d+", "").toUpperCase();
-        switch (unitPart) {
-            case "":
-            case "B":
-                return number;
-            case "K":
-            case "KB":
-                return number * ONE_KB;
-            case "M":
-            case "MB":
-                return number * ONE_MB;
-            default:
-                throw new IllegalArgumentException("Unsupported unit in characterCountKey: " + characterCountKey + "unitPart: " + unitPart);
-        }
+        return switch (unitPart) {
+            case "", "B" -> number;
+            case "K", "KB" -> number * ONE_KB;
+            case "M", "MB" -> number * ONE_MB;
+            default ->
+                    throw new IllegalArgumentException("Unsupported unit in characterCountKey: " + characterCountKey + "unitPart: " + unitPart);
+        };
     }
 
 
